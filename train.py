@@ -21,6 +21,5 @@ def main():
 
     # train model
     model.train(train, dev)
-
 if __name__ == "__main__":
     main()
