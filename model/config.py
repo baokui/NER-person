@@ -54,8 +54,8 @@ class Config():
 
 
     # general config
-    os.mkdir('results_zh')
-    os.mkdir('results_zh/test')
+    #os.mkdir('results_zh')
+    #os.mkdir('results_zh/test')
     dir_output = "results_zh/test/"
     dir_model  = dir_output + "model.weights/"
     path_log   = dir_output + "log.txt"
