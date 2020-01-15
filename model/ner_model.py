@@ -289,8 +289,8 @@ class NERModel(BaseModel):
             prog.update(i + 1, [("train loss", train_loss)])
 
             # tensorboard
-            if i % 10 == 0:
-                self.file_writer.add_summary(summary, epoch*nbatches + i)
+            #if i % 10 == 0:
+                #self.file_writer.add_summary(summary, epoch*nbatches + i)
 
         metrics = self.run_evaluate(dev)
         msg = " - ".join(["{} {:04.2f}".format(k, v)
