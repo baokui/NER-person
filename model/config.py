@@ -1,6 +1,4 @@
 import os
-
-
 from .general_utils import get_logger
 from .data_utils import get_trimmed_glove_vectors, load_vocab, \
         get_processing_word
@@ -56,18 +54,22 @@ class Config():
 
 
     # general config
-    dir_output = "results/test/"
+    os.mkdir('results_zh')
+    os.mkdir('results_zh/test')
+    dir_output = "results_zh/test/"
     dir_model  = dir_output + "model.weights/"
     path_log   = dir_output + "log.txt"
 
     # embeddings
-    dim_word = 300
+    dim_word = 128
     dim_char = 100
 
     # glove files
-    filename_glove = "data/glove.6B/glove.6B.{}d.txt".format(dim_word)
+    #filename_glove = "data/glove.6B/glove.6B.{}d.txt".format(dim_word)
     # trimmed embeddings (created from glove_filename with build_data.py)
-    filename_trimmed = "data/glove.6B.{}d.trimmed.npz".format(dim_word)
+    #filename_trimmed = "data/glove.6B.{}d.trimmed.npz".format(dim_word)
+    filename_glove = "/search/odin/guobk/streaming/vpa/vpa-data-process/UserInput/word2vec128/model-mean"
+    filename_trimmed = filename_glove+'-trimmed'
     use_pretrained = True
 
     # dataset
@@ -76,16 +78,16 @@ class Config():
     # filename_train = "data/coNLL/eng/eng.train.iob"
 
     #filename_dev = filename_test = filename_train = "data/test.txt" # test
-    filename_dev = "data/data/dev.txt"
-    filename_test = "data/data/test.txt"
-    filename_train = "data/data/train.txt"
+    filename_dev = "data_zh/dev.txt"
+    filename_test = "data_zh/test.txt"
+    filename_train = "data_zh/train.txt"
 
     max_iter = None # if not None, max number of examples in Dataset
 
     # vocab (created from dataset with build_data.py)
-    filename_words = "data/words.txt"
-    filename_tags = "data/tags.txt"
-    filename_chars = "data/chars.txt"
+    filename_words = "data_zh/words.txt"
+    filename_tags = "data_zh/tags.txt"
+    filename_chars = "data_zh/chars.txt"
 
     # training
     train_embeddings = False
@@ -100,7 +102,7 @@ class Config():
 
     # model hyperparameters
     hidden_size_char = 100 # lstm on chars
-    hidden_size_lstm = 300 # lstm on word embeddings
+    hidden_size_lstm = 128 # lstm on word embeddings
 
     # NOTE: if both chars and crf, only 1.6x slower on GPU
     use_crf = True # if crf, training is 1.7x slower on CPU
