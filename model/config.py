@@ -78,9 +78,9 @@ class Config():
     # filename_train = "data/coNLL/eng/eng.train.iob"
 
     #filename_dev = filename_test = filename_train = "data/test.txt" # test
-    filename_dev = "data_zh/dev.txt"
-    filename_test = "data_zh/test.txt"
-    filename_train = "data_zh/train.txt"
+    filename_dev = "data_zh/dev-trim.txt"
+    filename_test = "data_zh/test-trim.txt"
+    filename_train = "data_zh/train-trim.txt"
 
     max_iter = None # if not None, max number of examples in Dataset
 

@@ -207,3 +207,54 @@ def pro_merge_all():
         f.write('\n\n'.join(Test))
     with open('data_zh/dev.txt','w',encoding='utf-8') as f:
         f.write('\n\n'.join(Dev))
+def getVocab():
+    paths = ['data_zh/train.txt','data_zh/test.txt','data_zh/dev.txt']
+    words = []
+    tags = []
+    for path in paths:
+        with open(path,'r',encoding='utf-8') as f:
+            s = f.read().strip().split('\n\n')[1:]
+        for ss in s:
+            t = ss.split('\n')
+            t = [tt.split('\t') for tt in t]
+            word = [tt[0] for tt in t]
+            tag = [tt[-1] for tt in t]
+            words.extend(word)
+            tags.extend(tag)
+    Tag = {words[i]:tags[i] for i in range(len(words))}
+    W = {}
+    for w in words:
+        if w not in W:
+            W[w] = 1
+        else:
+            W[w] += 1
+    S = [(w,W[w]) for w in W]
+    S = sorted(S,key=lambda x:-x[-1])
+    T = [s[0] for s in S if s[1]>20 and Tag[s[0]]=='O']
+    T += [s[0] for s in S if Tag[s[0]]!='O']
+    with open('data_zh/D.txt','w',encoding='utf-8') as f:
+        f.write('\n'.join(T))
+    paths0 = ['data_zh/train.txt', 'data_zh/test.txt', 'data_zh/dev.txt']
+    paths = ['data_zh/train-trim.txt', 'data_zh/test-trim.txt', 'data_zh/dev-trim.txt']
+    for ii in range(len(paths0)):
+        path = paths0[ii]
+        with open(path, 'r', encoding='utf-8') as f:
+            s = f.read().strip().split('\n\n')[1:]
+        A = []
+        for ss in s:
+            t = ss.split('\n')
+            t = [tt.split('\t') for tt in t]
+            word0 = [tt[0] for tt in t]
+            tag = [tt[-1] for tt in t]
+            word = []
+            for w in word0:
+                if w in T:
+                    word.append(w)
+                else:
+                    word.append('[UNK]')
+            t = [word[i]+'\t'+tag[i] for i in range(len(word))]
+            t = '\n'.join(t)
+            A.append(t)
+        A = ['-DOCSTART-\tO'] + A
+        with open(paths[ii], 'w', encoding='utf-8') as f:
+            f.write('\n\n'.join(A))
