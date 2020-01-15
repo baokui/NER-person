@@ -69,7 +69,7 @@ class Config():
     # trimmed embeddings (created from glove_filename with build_data.py)
     #filename_trimmed = "data/glove.6B.{}d.trimmed.npz".format(dim_word)
     filename_glove = "/search/odin/guobk/streaming/vpa/vpa-data-process/UserInput/word2vec128/model-mean"
-    filename_trimmed = filename_glove+'-trimmed'
+    filename_trimmed = filename_glove+'-trimmed.npz'
     use_pretrained = True
 
     # dataset
