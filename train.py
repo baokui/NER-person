@@ -1,10 +1,13 @@
 from model.data_utils import CoNLLDataset
 from model.ner_model import NERModel
-from model.config import Config
+import sys
 
-
-def main():
+def main(model):
     # create instance of config
+    if mode=='char':
+        from model.config_char import Config
+    else:
+        from model.config import Config
     config = Config()
     #tf.reset_default_graph()
     # build model
@@ -49,4 +52,5 @@ def main():
 
         return metrics["f1"]
 if __name__ == "__main__":
-    main()
+    mode = sys.argv[1]
+    main(mode)
