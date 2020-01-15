@@ -258,3 +258,40 @@ def getVocab():
         A = ['-DOCSTART-\tO'] + A
         with open(paths[ii], 'w', encoding='utf-8') as f:
             f.write('\n\n'.join(A))
+
+def data_char():
+    paths0 = ['data_zh/train.txt', 'data_zh/test.txt', 'data_zh/dev.txt']
+    paths = ['data_zh/train-char.txt', 'data_zh/test-char.txt', 'data_zh/dev-char.txt']
+    for ii in range(len(paths0)):
+        path = paths0[ii]
+        with open(path, 'r', encoding='utf-8') as f:
+            s = f.read().strip().split('\n\n')[1:]
+        A = []
+        for ss in s:
+            t = ss.split('\n')
+            t = [tt.split('\t') for tt in t]
+            word0 = [tt[0] for tt in t]
+            tag0 = [tt[-1] for tt in t]
+            word = []
+            tag = []
+            lasttag = 'O'
+            for i in range(len(word0)):
+                w = word0[i]
+                word.extend(list(w))
+                if tag0[i]=='O':
+                    tag.extend(['O']*len(w))
+                    lasttag = 'O'
+                else:
+                    if lasttag=='O':
+                        tag.extend(['PER-B'])
+                        tag.extend(['PER-I'] * (len(w)-1))
+                        lasttag = 'PER-B'
+                    else:
+                        tag.extend(['PER-I'] * len(w))
+                        lasttag = 'PER-B'
+            t = [word[i] + '\t' + tag[i] for i in range(len(word))]
+            t = '\n'.join(t)
+            A.append(t)
+        A = ['-DOCSTART-\tO'] + A
+        with open(paths[ii], 'w', encoding='utf-8') as f:
+            f.write('\n\n'.join(A))
